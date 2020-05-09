@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+    <properties resource="conf.properties"></properties>
+    <settings><!--需要在properties后面-->
+        <!-- 开启日志，并指定使用的具体日志 -->
+<!--        <setting name="logImpl" value="LOG4J"/>-->
+        <!-- 开启延迟加载 -->
+        <setting name="lazyLoadingEnabled" value="true"/>
+
+        <!-- 关闭立即加载 -->
+        <setting name="aggressiveLazyLoading" value="false"/>
+    </settings>
+    <typeAliases>
+<!--        <typeAlias type="org.studyMybatisByMaven.entity.Person" alias="Person"></typeAlias>-->
+        <package name="org.studyMybatisByMaven"/><!--这个包底下的类名就是别名-->
+    </typeAliases>
+    <typeHandlers>
+        <typeHandler handler="BooleanAndInteger" javaType="Boolean" jdbcType="INTEGER"></typeHandler><!--jdbcType值只能大写-->
+    </typeHandlers>
+    <environments default="development">
+        <environment id="development">
+            <transactionManager type="JDBC"/>
+            <dataSource type="POOLED">
+                <property name="driver" value="${driver}"/>
+                <property name="url" value="${url}"/>
+                <property name="username" value="${username}"/>
+                <property name="password" value="${password}"/>
+            </dataSource>
+        </environment>
+    </environments>
+    <mappers>
+        <mapper resource="java/org/studyMybatisByMaven/mapper/PersonMapper.xml"/>   <!--这里是资源文件相对路径-->
+        <mapper resource="java/org/studyMybatisByMaven/mapper/PeopleMapper"/>
+    </mappers>
+</configuration>

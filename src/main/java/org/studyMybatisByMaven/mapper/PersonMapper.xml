@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="org.studyMybatisByMaven.mapper.PersonMapper">  <!--基础增删查改随便取，但是statement要与之对应-->
+    <!--方法引用-->
+    <sql id="asd">
+        select * from Person
+        <where>
+            <if test="ids!=null and ids.size>0">
+                <foreach collection="ids" open="and id in(" close=")" item="id" separator=",">
+                    #{id}
+                </foreach>
+            </if>
+        </where>
+    </sql>
+
+
+    <!--resultType要写要写全类名-->
+    <select id="queryPersonById" resultType="Person"
+            parameterType="integer">select * from Person where  id = #{id}</select>
+
+    <select id="queryPersonByPeopleId" resultType="Person"
+            parameterType="integer">select * from Person where  peopleId = #{peopleId}</select>
+
+    <select id="queryAllPerson" resultType="Person" parameterType="integer">select * from Person</select>
+    <delete id="deletePersonById" parameterType="integer">delete from Person where  id = #{id}</delete>
+    <insert id="insertPerson" parameterType="Person">insert into Person VALUES(#{id},#{name},#{age})</insert>
+    <update id="updatePersonById"
+            parameterType="Person">update Person set name=#{name},age=#{age} where id=#{id}</update>
+    <!--转换器映射-->
+    <select id="queryPersonByIdWithConverter" resultMap="PersonSex"
+            parameterType="integer">select * from Person where  id = #{id}</select>
+    <!--转换器映射多表查询一对一-->
+    <select id="queryPersonByIdWithConverter2" resultMap="PersonSex2"
+            parameterType="integer">select p.*,a.* from Person p,Address a where  id = #{id} and a.addressId=p.addressId</select>
+    <!--转换器映射多表查询一对多-->
+    <select id="queryPersonByIdWithConverterOneToMany" resultMap="People"
+            parameterType="integer">select  People.*,Person.* from Person,People where  People.PeopleId = #{id} and People.id=Person.id</select>
+    <select id="queryAllPersonWithConverter" resultType="Person" parameterType="integer">select * from Person</select>
+    <delete id="deletePersonByIdWithConverter" parameterType="integer">delete from Person where  id = #{id}</delete>
+    <!--一对一插入-->
+    <insert id="insertPersonWithConverter"
+            parameterType="Person">insert into Person VALUES(#{id},#{name},#{age},#{sex,javaType=boolean,jdbcType=INTEGER},#{addressId})</insert>
+<!--    这里javaType中的值不需要加双引号-->
+    <update id="updatePersonByIdWithConverter"
+            parameterType="Person">update Person set name=#{name},age=#{age},sex=#{sex,javaType=boolean,jdbcType=INTEGER} where id=#{id}</update>
+
+    <!--调用存储过程且使用Map-->
+    <select id="selectLittleByIdWithProcedureAndMap" statementType="CALLABLE" resultType="HashMap"
+            parameterType="HashMap">
+		{CALL little(#{idValue,jdbcType=INTEGER,mode=IN},#{count,jdbcType=INTEGER,mode=OUT})}
+    </select>
+
+    <!--动态sql语句-->
+    <select id="selectPersonDynamicSqlByNameAndAge" resultType="Person" parameterType="Person">
+        select * from Person
+        <where>
+            <if test="name!=null and name !=''">
+                and name = #{name}
+            </if>
+            <if test="age!=null and age !=''">
+                and age = #{age}
+            </if>
+        </where>
+    </select>
+    <!--动态多值赋值-->
+    <select id="selectPersonDynamicSqlByGrade" resultType="Person" parameterType="Grade">
+        <include refid="asd"></include>
+    </select>
+
+    <!--增删改默认返回int,动态代理使用select代替其他会GG-->
+    <resultMap id="PersonSex" type="Person">
+        <id property="id" column="id"/>
+        <result property="name" column="name"/>
+        <result property="age" column="age"/>
+        <result property="sex" column="sex" javaType="boolean" jdbcType="INTEGER"/>
+    </resultMap>
+    <resultMap id="PersonSex2" type="Person">
+        <id property="id" column="id"/>
+        <result property="name" column="name"/>
+        <result property="age" column="age"/>
+        <result property="sex" column="sex" javaType="boolean" jdbcType="INTEGER"/>
+        <result property="addressId" column="addressId"></result>
+        <association property="address" javaType="Address">
+            <id property="addressId" column="addressId"></id>
+            <result property="homeAddress" column="homeAddress"/>
+            <result property="family" column="family"/>
+        </association>
+    </resultMap>
+    <!--一对多映射-->
+    <resultMap id="People" type="People">
+        <id property="peopleId" column="peopleId"/>
+        <result property="id" column="Id"/>
+        <collection property="persons"  ofType="Person" >
+            <id property="id" column="id"/>
+            <result property="name" column="name"/>
+            <result property="age" column="age"/>
+            <result property="sex" column="sex" javaType="boolean" jdbcType="INTEGER"/>
+            <result property="addressId" column="addressId"></result>
+            <association property="address" javaType="Address">
+                <id property="addressId" column="addressId"></id>
+                <result property="homeAddress" column="homeAddress"/>
+                <result property="family" column="family"/>
+            </association>
+        </collection>
+    </resultMap>
+
+
+
+
+
+
+</mapper>

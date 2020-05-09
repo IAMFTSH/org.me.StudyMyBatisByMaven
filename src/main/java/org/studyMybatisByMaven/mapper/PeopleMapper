@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="org.studyMybatisByMaven.mapper.PeopleMapper">
+    <select id="queryPeopleAndStudentByIdLazyLoad" resultMap="PeopleLazyLoad" parameterType="int">
+        select  People.* from People where peopleId=#{id}
+    </select>
+    <select id="queryPersonByIdWithConverterOneToMany" resultMap="People"
+            parameterType="integer">select  People.*,Person.* from Person,People where  People.PeopleId = #{id} and People.id=Person.id</select>
+
+
+
+    <resultMap id="PeopleLazyLoad" type="People">
+        <id property="peopleId" column="peopleId"/>
+        <result property="id" column="id"/>
+        <collection property="persons" ofType="person" select="org.studyMybatisByMaven.mapper.PersonMapper.queryPersonByPeopleId" column="peopleId"/><!--PersonMapper的namespace.方法id-->
+    </resultMap>
+
+    <resultMap id="People" type="People">
+        <id property="peopleId" column="peopleId"/>
+        <result property="id" column="Id"/>
+        <collection property="persons"  ofType="Person" >
+            <id property="id" column="id"/>
+            <result property="name" column="name"/>
+            <result property="age" column="age"/>
+            <result property="sex" column="sex" javaType="boolean" jdbcType="INTEGER"/>
+            <result property="addressId" column="addressId"></result>
+            <association property="address" javaType="Address">
+                <id property="addressId" column="addressId"></id>
+                <result property="homeAddress" column="homeAddress"/>
+                <result property="family" column="family"/>
+            </association>
+        </collection>
+    </resultMap>
+</mapper>
