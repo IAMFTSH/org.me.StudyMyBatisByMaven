@@ -26,9 +26,9 @@
 
     <select id="queryAllPerson" resultType="Person" parameterType="integer">select * from Person</select>
     <delete id="deletePersonById" parameterType="integer">delete from Person where  id = #{id}</delete>
-    <insert id="insertPerson" parameterType="Person">insert into Person VALUES(#{id},#{name},#{age})</insert>
+    <insert id="insertPerson" parameterType="Person">insert into Person VALUES(#{id},#{name},#{age},#{sex},#{addressId},#{peopleId})</insert>
     <update id="updatePersonById"
-            parameterType="Person">update Person set name=#{name},age=#{age} where id=#{id}</update>
+            parameterType="Person">update Person set name=#{name},age=#{age},sex=#{sex} where id=#{id}</update>
     <!--转换器映射-->
     <select id="queryPersonByIdWithConverter" resultMap="PersonSex"
             parameterType="integer">select * from Person where  id = #{id}</select>
@@ -42,10 +42,10 @@
     <delete id="deletePersonByIdWithConverter" parameterType="integer">delete from Person where  id = #{id}</delete>
     <!--一对一插入-->
     <insert id="insertPersonWithConverter"
-            parameterType="Person">insert into Person VALUES(#{id},#{name},#{age},#{sex,javaType=boolean,jdbcType=INTEGER},#{addressId})</insert>
+            parameterType="Person">insert into Person VALUES(#{id},#{name},#{age},#{sex,javaType=boolean,jdbcType=INTEGER},#{addressId},#{peopleId})</insert>
 <!--    这里javaType中的值不需要加双引号-->
     <update id="updatePersonByIdWithConverter"
-            parameterType="Person">update Person set name=#{name},age=#{age},sex=#{sex,javaType=boolean,jdbcType=INTEGER} where id=#{id}</update>
+            parameterType="Person">update Person set name=#{name},age=#{age},sex=#{sex,javaType=boolean,jdbcType=INTEGER},addressId=#{addressId} where id=#{id}</update>
 
     <!--调用存储过程且使用Map-->
     <select id="selectLittleByIdWithProcedureAndMap" statementType="CALLABLE" resultType="HashMap"

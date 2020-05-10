@@ -23,9 +23,9 @@ public class TestPerson3 {
 
         System.out.println(personMapper.queryPersonByIdWithConverter(12));
 
-        System.out.println(personMapper.queryPersonByIdWithConverter2(11));//一对一
+        System.out.println("一对一："+personMapper.queryPersonByIdWithConverter2(11));//一对一
 
-        People people=peopleMapper.queryPersonByIdWithConverterOneToMany(1);//一对多 地址因为sql没叫查所以为空
+        People people=peopleMapper.queryPersonByIdWithConverterOneToMany(100);//一对多 地址因为sql没叫查所以为空
         List<Person> personList=people.getPersons();
         System.out.println(personList);
 
@@ -35,8 +35,8 @@ public class TestPerson3 {
         System.out.println("删除"+num);
         sqlSession.commit();
 
-        Address address=new Address("asd","dsa",4);
-        Person person1 = new Person(20, "ddd", 30, false, 1, address, 1);
+        Address address=new Address("AAAAA","BBBBB",4);
+        Person person1 = new Person(20, "ddd", 30, false, 4, address, 1);
         System.out.println("插入"+personMapper.insertPersonWithConverter(person1));
         sqlSession.commit();
 

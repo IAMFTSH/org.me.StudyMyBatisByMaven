@@ -9,14 +9,13 @@
     </select>
     <select id="queryPersonByIdWithConverterOneToMany" resultMap="People"
             parameterType="integer">select  People.*,Person.* from Person,People where  People.PeopleId = #{id} and People.id=Person.id</select>
-
-
-
     <resultMap id="PeopleLazyLoad" type="People">
         <id property="peopleId" column="peopleId"/>
         <result property="id" column="id"/>
         <collection property="persons" ofType="person" select="org.studyMybatisByMaven.mapper.PersonMapper.queryPersonByPeopleId" column="peopleId"/><!--PersonMapper的namespace.方法id-->
     </resultMap>
+
+
 
     <resultMap id="People" type="People">
         <id property="peopleId" column="peopleId"/>

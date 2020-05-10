@@ -19,14 +19,14 @@ public class TestPerson5 {
         PersonMapper personMapper = sqlSession.getMapper(PersonMapper.class);
 
         Person person=new Person();
-        person.setName("ddd");
+        person.setName("ccc");
         person.setAge(30);
         List<Person> persons=personMapper.selectPersonDynamicSqlByNameAndAge(person);
         System.out.println(persons);
 
         List ids=new ArrayList();
         ids.add(11);
-        ids.add(30);
+        ids.add(14);
         Grade grade=new Grade(ids);
         persons=personMapper.selectPersonDynamicSqlByGrade(grade);
         System.out.println(persons);

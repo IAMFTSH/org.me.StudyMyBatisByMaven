@@ -27,11 +27,9 @@ public class TestPerson2 {
         System.out.println(num);
         sqlSession.commit();
 
-/*
-        Person person1 = new Person(20, "ddd", 30, false);
+        Person person1 = new Person(20, "ddd", 30, false,20,100);
         System.out.println(personMapper.insertPerson(person1));
         sqlSession.commit();
-*/
 
         List<Person> persons = personMapper.queryAllPerson();
         System.out.println(persons);

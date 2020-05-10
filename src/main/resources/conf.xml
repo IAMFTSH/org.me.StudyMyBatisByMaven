@@ -33,6 +33,6 @@
     </environments>
     <mappers>
         <mapper resource="java/org/studyMybatisByMaven/mapper/PersonMapper.xml"/>   <!--这里是资源文件相对路径-->
-        <mapper resource="java/org/studyMybatisByMaven/mapper/PeopleMapper"/>
+        <mapper resource="java/org/studyMybatisByMaven/mapper/PeopleMapper.xml"/>
     </mappers>
 </configuration>

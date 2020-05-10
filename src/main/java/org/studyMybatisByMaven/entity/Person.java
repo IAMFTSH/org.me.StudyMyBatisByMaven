@@ -39,6 +39,15 @@ public class Person {
         this.peopleId = peopleId;
     }
 
+    public Person(int id, String name, int age, boolean sex, int addressId, int peopleId) {
+        this.id = id;
+        this.name = name;
+        this.age = age;
+        this.sex = sex;
+        this.addressId = addressId;
+        this.peopleId = peopleId;
+    }
+
     public Person() {
     }
 

@@ -17,8 +17,8 @@ public class TestPeople {
         PersonMapper personMapper = sqlSession.getMapper(PersonMapper.class);
         PeopleMapper PeopleMapper = sqlSession.getMapper(PeopleMapper.class);
 
-        System.out.println(PeopleMapper.queryPeopleAndStudentByIdLazyLoad(1).toString());
-        System.out.println(PeopleMapper.queryPeopleAndStudentByIdLazyLoad(1).getPersons().toString());
+        System.out.println(PeopleMapper.queryPeopleAndStudentByIdLazyLoad(100).toString());
+        System.out.println(PeopleMapper.queryPeopleAndStudentByIdLazyLoad(100).getPersons().toString());
 
 
         sqlSession.close();
