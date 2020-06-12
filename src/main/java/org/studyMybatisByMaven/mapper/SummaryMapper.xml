@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="org.studyMybatisByMaven.mapper.SummaryMapper">
+    <!--动态sql语句-->
+    <select id="selectPersonDynamicSqlByNameAndAge" resultType="Person" parameterType="Person">
+        select * from Person
+        <where>
+            <if test="name!=null and name !=''">
+                and name = #{name}
+            </if>
+            <if test="age!=null and age !=''">
+                and age = #{age}
+            </if>
+        </where>
+    </select>
+
+    <!--Student单表插入-->
+    <insert id="insertStudent" parameterType="Student">
+        insert into student VALUES(#{id},#{name},#{age})
+    </insert>
+
+    <!--多表查询-->
+    <select id="selectManyToMany" parameterType="integer" resultMap="studentMany">
+        select s.id,s.age,s.name,t.id,t.name,t.subject,l.id,l.name,l.stu_num
+        FROM student s,teacher t,lesson l,stu_lesson sl
+        WHERE sl.stu_id=s.id and sl.lesson_id=l.id and sl.teacher_id=t.id and
+        s.id=#{id}
+    </select>
+    <resultMap id="studentMany" type="Student">
+        <id property="id" column="id"/>
+        <result property="age" column="age"/>
+        <result property="name" column="name"/>
+        <association property="lesson" javaType="Lesson">
+            <id property="id" column="id"></id>
+            <result property="name" column="name"/>
+            <result property="stuNum" column="stu_num"/>
+        </association>
+        <association property="teacher" javaType="Teacher">
+            <id property="id" column="id"></id>
+            <result property="name" column="name"/>
+            <result property="subject" column="subject"/>
+        </association>
+    </resultMap>
+</mapper>
+

@@ -6,12 +6,13 @@
     <properties resource="conf.properties"></properties>
     <settings><!--需要在properties后面-->
         <!-- 开启日志，并指定使用的具体日志 -->
-<!--        <setting name="logImpl" value="LOG4J"/>-->
+        <setting name="logImpl" value="LOG4J"/>
         <!-- 开启延迟加载 -->
         <setting name="lazyLoadingEnabled" value="true"/>
 
         <!-- 关闭立即加载 -->
         <setting name="aggressiveLazyLoading" value="false"/>
+
     </settings>
     <typeAliases>
 <!--        <typeAlias type="org.studyMybatisByMaven.entity.Person" alias="Person"></typeAlias>-->
@@ -34,5 +35,6 @@
     <mappers>
         <mapper resource="java/org/studyMybatisByMaven/mapper/PersonMapper.xml"/>   <!--这里是资源文件相对路径-->
         <mapper resource="java/org/studyMybatisByMaven/mapper/PeopleMapper.xml"/>
+        <mapper resource="java/org/studyMybatisByMaven/mapper/SummaryMapper.xml"/>
     </mappers>
 </configuration>

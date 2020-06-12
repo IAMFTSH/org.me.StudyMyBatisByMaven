@@ -5,7 +5,7 @@
 
 <mapper namespace="org.studyMybatisByMaven.mapper.PeopleMapper">
     <select id="queryPeopleAndStudentByIdLazyLoad" resultMap="PeopleLazyLoad" parameterType="int">
-        select  People.* from People where peopleId=#{id}
+        select  peopleId, id from People where peopleId=#{id}
     </select>
     <select id="queryPersonByIdWithConverterOneToMany" resultMap="People"
             parameterType="integer">select  People.*,Person.* from Person,People where  People.PeopleId = #{id} and People.id=Person.id</select>

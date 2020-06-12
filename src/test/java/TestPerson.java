@@ -27,10 +27,10 @@ public class TestPerson {
         System.out.println("id刪人"+sqlSession.delete(deletePersonByIDStatement, 1));
         sqlSession.commit();
 
-        String insertPersonStatement = "org.studyMybatisByMaven.mapper.PersonMapper.insertPerson";  //这里的参数要和Mapper的namespace相同
-        Person person1=new Person(17,"ddd",30, false,20,100);
+/*        String insertPersonStatement = "org.studyMybatisByMaven.mapper.PersonMapper.insertPerson";  //这里的参数要和Mapper的namespace相同
+        Person person1=new Person(18,"ddd",30, false,20,100);
         System.out.println("id加人"+sqlSession.insert(insertPersonStatement,person1));
-        sqlSession.commit();
+        sqlSession.commit();*/
 
         String queryAllPersonStatement = "org.studyMybatisByMaven.mapper.PersonMapper.queryAllPerson";
         List<Person> persons = sqlSession.selectList(queryAllPersonStatement);

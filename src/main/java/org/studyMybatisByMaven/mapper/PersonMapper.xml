@@ -4,20 +4,9 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="org.studyMybatisByMaven.mapper.PersonMapper">  <!--基础增删查改随便取，但是statement要与之对应-->
-    <!--方法引用-->
-    <sql id="asd">
-        select * from Person
-        <where>
-            <if test="ids!=null and ids.size>0">
-                <foreach collection="ids" open="and id in(" close=")" item="id" separator=",">
-                    #{id}
-                </foreach>
-            </if>
-        </where>
-    </sql>
 
 
-    <!--resultType要写要写全类名-->
+    <!--resultType要写要写全类名  取了别名除外-->
     <select id="queryPersonById" resultType="Person"
             parameterType="integer">select * from Person where  id = #{id}</select>
 
@@ -35,17 +24,15 @@
     <!--转换器映射多表查询一对一-->
     <select id="queryPersonByIdWithConverter2" resultMap="PersonSex2"
             parameterType="integer">select p.*,a.* from Person p,Address a where  id = #{id} and a.addressId=p.addressId</select>
-    <!--转换器映射多表查询一对多-->
+    <!--转换器映射多表查询一对多--><!--没有连接person中address表，所以查不出-->
     <select id="queryPersonByIdWithConverterOneToMany" resultMap="People"
             parameterType="integer">select  People.*,Person.* from Person,People where  People.PeopleId = #{id} and People.id=Person.id</select>
     <select id="queryAllPersonWithConverter" resultType="Person" parameterType="integer">select * from Person</select>
     <delete id="deletePersonByIdWithConverter" parameterType="integer">delete from Person where  id = #{id}</delete>
-    <!--一对一插入-->
     <insert id="insertPersonWithConverter"
             parameterType="Person">insert into Person VALUES(#{id},#{name},#{age},#{sex,javaType=boolean,jdbcType=INTEGER},#{addressId},#{peopleId})</insert>
 <!--    这里javaType中的值不需要加双引号-->
-    <update id="updatePersonByIdWithConverter"
-            parameterType="Person">update Person set name=#{name},age=#{age},sex=#{sex,javaType=boolean,jdbcType=INTEGER},addressId=#{addressId} where id=#{id}</update>
+    <update id="updatePersonByIdWithConverter" parameterType="Person">update Person set name=#{name},age=#{age},sex=#{sex,javaType=boolean,jdbcType=INTEGER},addressId=#{addressId} where id=#{id}</update>
 
     <!--调用存储过程且使用Map-->
     <select id="selectLittleByIdWithProcedureAndMap" statementType="CALLABLE" resultType="HashMap"
@@ -69,6 +56,17 @@
     <select id="selectPersonDynamicSqlByGrade" resultType="Person" parameterType="Grade">
         <include refid="asd"></include>
     </select>
+    <!--方法引用-->
+    <sql id="asd">
+        select * from Person
+        <where>
+            <if test="ids!=null and ids.size>0">
+                <foreach collection="ids" open="and id in(" close=")" item="id" separator=",">
+                    #{id}
+                </foreach>
+            </if>
+        </where>
+    </sql>
 
     <!--增删改默认返回int,动态代理使用select代替其他会GG-->
     <resultMap id="PersonSex" type="Person">

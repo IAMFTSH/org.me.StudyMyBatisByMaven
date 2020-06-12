@@ -9,7 +9,7 @@ import java.io.IOException;
 import java.io.Reader;
 
 public class TestPeople {
-    
+
     public static void main(String[] args) throws IOException {
         SqlSession sqlSession = null;
         sqlSession = new TestPerson2().getSqlSession();
@@ -18,8 +18,9 @@ public class TestPeople {
         PeopleMapper PeopleMapper = sqlSession.getMapper(PeopleMapper.class);
 
         System.out.println(PeopleMapper.queryPeopleAndStudentByIdLazyLoad(100).toString());
+        System.out.println("-----------------------------------------------------------------------------");
         System.out.println(PeopleMapper.queryPeopleAndStudentByIdLazyLoad(100).getPersons().toString());
-
+        System.out.println("-----------------------------------------------------------------------------");
 
         sqlSession.close();
     }
